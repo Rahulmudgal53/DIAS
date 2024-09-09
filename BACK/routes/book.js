@@ -137,4 +137,24 @@ router.delete("/deleteBook/:id", fetchuser, async (req, res) => {
   }
 });
 
+// Route 5: Get all books (Public route, no authentication required)
+router.get("/fetchallbooks", async (req, res) => {
+  try {
+    // Fetch all books from the database
+    const books = await BookStore.find();
+
+    // If no books found, return a message
+    if (!books || books.length === 0) {
+      return res.status(404).json({ message: "No books found" });
+    }
+
+    // Return all books
+    res.json(books);
+  } catch (error) {
+    console.error("Error while fetching books: ", error.message);
+    return res.status(500).send("Internal Server error occurred");
+  }
+});
+
+
 module.exports = router;

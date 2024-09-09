@@ -10,7 +10,7 @@ const fetchuser = require('../middleware/fetchuser')
 router.post(
   "/register",
   [
-    body("name", "Enter a valid Name").isLength({ min: 3 }),
+    body("username", "Enter a valid Name").isLength({ min: 3 }),
     body("email", "Enter a valid email").isEmail(),
     body("password", "Create a password of length 5 - 16 alphabets").isLength({
       min: 5,
@@ -18,10 +18,10 @@ router.post(
     }),
   ],
   async (req, res) => {
-    const { name, email, password, role } = req.body;
+    const { username, email, password, role } = req.body;
 
     // Check if all fields are provided
-    if (!name || !email || !password || !role) {
+    if (!username || !email || !password || !role) {
       return res
         .status(400)
         .json({ message: "Please provide all required fields" });
@@ -43,7 +43,7 @@ router.post(
       const secPass = await bcrypt.hash(req.body.password, salt);
       // Create and save the user
       user = await User.create({
-        name,
+        username,
         email,
         password: secPass,
         role,
