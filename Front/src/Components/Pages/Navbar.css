@@ -1,0 +1,154 @@
+/* Navbar.css */
+@import url('https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap');
+.navbar {  
+    background-color: #A04747;
+    padding-inline: 2rem;
+    color: rgb(0, 0, 0);
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    /* position: relative; */
+  }
+  
+  .navbar-brand {
+    font-size: 2.5rem;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-family: "Protest Guerrilla", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    padding: 0;
+    rotate: -3deg;
+    position: relative;
+    /* top: 20px; */
+  }
+  .navbar-brand span{
+    position: absolute;
+    color: #FADFA1;
+    font-family: monospace;
+    font-size: 20px;
+    top: 30px;
+    rotate: 5deg;
+    right: 30px;
+  }
+  .navbar-toggler {
+    background: none;
+    border: none;
+    color: #000000;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: none; /* Hide by default */
+  }
+  
+  .navbar-menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-grow: 1;
+  }
+  
+  .search-form {
+    display: flex;
+    margin-right: 1rem;
+    flex-grow: 1;
+    justify-content: center;
+
+  }
+  
+  .search-input {
+    padding: 0.5rem;
+    padding-right: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: flex;
+    flex-grow: 1;
+    max-width: 400px; /* Maximum width for larger screens */
+    min-width: 150px; /* Minimum width for smaller screens */
+  }
+  .search-input:focus{
+    outline: none;
+    border: none;
+  }
+  .search-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #A04747;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    margin-left: -0.5rem;
+    box-shadow: 0 0px 4px rgba(226, 185, 185, 0.8);
+
+  }
+  
+  .nav-links {
+    list-style-type: none;
+    padding-block: 0px;
+    margin: 0;
+    display: flex;
+  }
+  
+  .nav-item {
+    margin: 0 1rem;
+
+  }
+  
+  .nav-link {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 20px;
+    display: inline;
+  }
+  
+  .nav-link.active {
+    /* background-color: #dab3a3; */
+    border-bottom: 10px solid #A27B5C;
+    /* border-inline: 4px solid #A27B5C; */
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    position: relative;
+    top: 5px;
+
+    padding: 15px;
+  }
+  
+  
+  
+  /* Media Queries for Responsiveness */
+  
+  @media (max-width: 768px) {
+    .navbar-menu {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #FADFA1;
+    }
+  
+    .navbar-menu.open {
+      display: flex;
+    }
+  
+    .navbar-toggler {
+      display: block;
+    }
+  
+    .search-form {
+      margin: 1rem;
+    }
+  
+    .nav-links {
+      flex-direction: column;
+    }
+  
+    .nav-item {
+      margin: 0.5rem 0;
+    }
+  }
+  

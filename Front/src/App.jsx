@@ -1,25 +1,23 @@
-import React from 'react'
-import { BrowserRouter as Router , Route , Link, Routes } from 'react-router-dom';
-import Navbar from './Components/Navbar';
-import Home from './Components/Home'; 
-import About from './Components/About';
-import AuthForm from './Components/AuthForm';
+import React, { useState } from "react";
+// import './App.css';
+import { BrowserRouter as Router } from "react-router-dom";
+import Navbar from "./Components/Pages/Navbar";
+import AppRoutes from "./AppRoutes";
+import { RoleContext } from "./Components/Authentication/AuthForm";
+
 function App() {
+  const [role, setRole] = useState(""); // Track user role
+
   return (
-    <>
+    <RoleContext.Provider value={{ role, setRole }}>
       <Router>
-        <div className="container">
-        <Routes>
-          {/* <Navbar/> */}
-          <Route path="/" element={<AuthForm />}/>    
-          <Route path="/home" element={<Home />}/>    
-          <Route path="/about" element={<About />}/>
-          
-        </Routes>
+        <Navbar />
+        <div className="roleComponent">
+          <AppRoutes />
         </div>
       </Router>
-    </>
-  )
+    </RoleContext.Provider>
+  );
 }
 
-export default App
+export default App;

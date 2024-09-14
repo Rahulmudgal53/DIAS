@@ -94,13 +94,15 @@ router.post(
           .status(400)
           .json({ error: "Please try to Login with correct credentials " });
       }
+      console.log(user)
       const data = {
         user: {
           id: user.id,
         },
       };
       const authToken = jwt.sign(data, process.env.JWT_SECRET);
-      res.json({ authToken });
+
+      res.json({ authToken , role:user.role });
     } catch (error) {
       console.error("Error while Login : ", error.message);
       return res.status(500).send("Internal Server error occured"); // Send error response here

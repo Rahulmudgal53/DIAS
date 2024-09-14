@@ -50,7 +50,7 @@ router.post(
         description,
         genre,
         price,
-        tags,
+        tags: tags.split(',').map(tag => tag.trim()),
         status,
         author: req.user.id,
       });
