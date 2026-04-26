@@ -53,7 +53,7 @@ router.post(
           id: user.id,
         },
       };
-      const authToken = jwt.sign(data, process.env.JWT_SECRET);
+      const authToken = jwt.sign(data, process.env.JWT_SECRET, { expiresIn: '24h' });
 
       return res.status(201).json({
         message: "User registered successfully",
@@ -100,7 +100,7 @@ router.post(
           id: user.id,
         },
       };
-      const authToken = jwt.sign(data, process.env.JWT_SECRET);
+      const authToken = jwt.sign(data, process.env.JWT_SECRET, { expiresIn: '24h' });
 
       res.json({ authToken , role:user.role });
     } catch (error) {

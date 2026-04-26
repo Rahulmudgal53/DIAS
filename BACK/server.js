@@ -8,7 +8,12 @@ const connectToMongo = require('./db');
 // const bodyParser = require('body-parser');
 
 const app = express();
-app.use(cors());
+
+// Configure CORS to allow both frontend origins
+app.use(cors({
+  origin: ['http://localhost:3000', 'http://localhost:5173'],
+  credentials: true
+}));
 
 
 const port = process.env.PORT || 5000;

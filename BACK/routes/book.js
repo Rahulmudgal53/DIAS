@@ -8,12 +8,13 @@ const { body, validationResult } = require("express-validator");
 router.get("/fetchbooks", fetchuser, async (req, res) => {
   try {
     const books = await BookStore.find({ author: req.user.id });
-    res.json(books);
 
     // If no books found, return a message
     if (!books || books.length === 0) {
       return res.status(404).json({ message: "No books found" });
     }
+
+    res.json(books);
   } catch (error) {
     console.error("Error while fetching books: ", error.message);
     return res.status(500).send("Internal Server error occurred");

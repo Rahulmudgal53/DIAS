@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { books } from '../../api/apiClient';
 
 const AddBook = () => {
   const [formData, setFormData] = useState({
@@ -23,33 +24,28 @@ const AddBook = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/api/book/addbook', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      const result = await response.json();
-      console.log(result);
-      if (response.ok) {
-        alert('Book added successfully');
-        setFormData({
-          cover: '',
-          title: '',
-          description: '',
-          genre: '',
-          // publishDate: '',
-          price: '',
-          tags: '',
-          status: 'draft',
-        });
-      } else {
-        alert('Error adding book');
+      const authToken = localStorage.getItem('auth-token');
+      if (!authToken) {
+        alert('Please log in first');
+        return;
       }
+      
+      const result = await books.addBook(formData);
+      console.log(result);
+      
+      alert('Book added successfully');
+      setFormData({
+        cover: '',
+        title: '',
+        description: '',
+        genre: '',
+        price: '',
+        tags: '',
+        status: 'draft',
+      });
     } catch (error) {
       console.log('Error:', error);
-      alert('Error adding book');
+      alert(error.message || 'Error adding book');
     }
   };
 

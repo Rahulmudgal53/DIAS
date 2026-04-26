@@ -1,6 +1,7 @@
 // AuthForm.js
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { auth } from "../../api/apiClient";
 import "./AuthForm.css";
 
 export const RoleContext = createContext();
@@ -16,6 +17,17 @@ const AuthForm = () => {
   const { setRole } = useContext(RoleContext); // Access RoleContext
   const navigate = useNavigate();
 
+  // Load token and role from localStorage on mount
+  useEffect(() => {
+    const storedToken = localStorage.getItem("auth-token");
+    const storedRole = localStorage.getItem("user-role");
+    
+    if (storedToken && storedRole) {
+      setRole(storedRole);
+      navigate(storedRole === "author" ? "/addbook" : "/home");
+    }
+  }, [navigate, setRole]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -27,50 +39,39 @@ const AuthForm = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        alert("Login successful");
-        setRole(data.role); // Store role in context
-        navigate(data.role === "author" ? "/addbook" : "/home"); // Redirect based on role
-      } else {
-        alert("Login failed");
-      }
+      const data = await auth.login(formData.email, formData.password);
+      
+      // Store token and role in localStorage
+      localStorage.setItem("auth-token", data.authToken);
+      localStorage.setItem("user-role", data.role);
+      
+      alert("Login successful");
+      setRole(data.role); // Store role in context
+      navigate(data.role === "author" ? "/addbook" : "/home"); // Redirect based on role
     } catch (err) {
       console.error("Login error:", err);
-      alert("Login error, please try again");
+      alert(err.message || "Login error, please try again");
     }
   };
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        alert("Registration successful");
-        setFormData({ username: "", email: "", password: "", role: "author" });
-        setLogin(true); // Switch back to login form after sign-up
-      } else {
-        alert("Registration failed");
-      }
+      const data = await auth.register(formData.username, formData.email, formData.password, formData.role);
+      
+      // Store token and role in localStorage
+      localStorage.setItem("auth-token", data.authToken);
+      localStorage.setItem("user-role", formData.role);
+      
+      alert("Registration successful");
+      setRole(formData.role); // Store role in context
+      setFormData({ username: "", email: "", password: "", role: "author" });
+      
+      // Navigate immediately after signup
+      navigate(formData.role === "author" ? "/addbook" : "/home");
     } catch (err) {
       console.error("Sign Up error:", err);
-      alert("Registration error, please try again");
+      alert(err.message || "Registration error, please try again");
     }
   };
 

@@ -1,0 +1,84 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 5rem);
+  padding: 2rem 1rem;
+}
+
+.form {
+  width: 100%;
+  max-width: 400px;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow);
+}
+
+.form h1 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.roleSelector {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.roleSelector label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.input {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.error {
+  color: var(--danger-color);
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background-color: #fee2e2;
+  border-radius: 0.5rem;
+}
+
+.button {
+  width: 100%;
+  background-color: var(--primary-color);
+  color: white;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.button:hover:not(:disabled) {
+  background-color: var(--secondary-color);
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.toggle {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+}
+
+.toggleLink {
+  background: none;
+  color: var(--primary-color);
+  padding: 0;
+  font-size: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.toggleLink:hover {
+  color: var(--secondary-color);
+}

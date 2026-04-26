@@ -1,13 +1,37 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { RoleContext } from '../Authentication/AuthForm';
 import './Navbar.css'; // Import the CSS file
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { role, setRole } = useContext(RoleContext);
+
+  // Check if user is logged in
+  useEffect(() => {
+    const token = localStorage.getItem('auth-token');
+    setIsLoggedIn(!!token);
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogout = () => {
+    // Clear localStorage
+    localStorage.removeItem('auth-token');
+    localStorage.removeItem('user-role');
+    
+    // Update context
+    setRole('');
+    setIsLoggedIn(false);
+    
+    // Redirect to login
+    navigate('/');
+    alert('Logged out successfully');
   };
 
   return (
@@ -35,7 +59,23 @@ const Navbar = () => {
             <Link className={`nav-link ${location.pathname === "/books" ? "active" : ""}`} to="/books">Books</Link>
           </li>
           <li className="nav-item ">
-            <Link className={`nav-link ${location.pathname === "/" ? "active" : ""}`} to="/login">Login</Link>
+            {isLoggedIn ? (
+              <button 
+                className="nav-link logout-btn" 
+                onClick={handleLogout}
+                style={{ 
+                  background: 'none', 
+                  border: 'none', 
+                  color: 'inherit',
+                  cursor: 'pointer',
+                  textDecoration: 'none'
+                }}
+              >
+                Logout
+              </button>
+            ) : (
+              <Link className={`nav-link ${location.pathname === "/" ? "active" : ""}`} to="/">Login</Link>
+            )}
           </li>
         </ul>
       </div>
